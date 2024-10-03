@@ -5,23 +5,31 @@ import { cn } from "@/lib/utils";
 
 export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
   const [screenSize, setScreenSize] = useState({ width: 0, height: 0 });
+  const [rows, setRows] = useState<number[]>([]);
+  const [cols, setCols] = useState<number[]>([]);
 
   useEffect(() => {
     const updateScreenSize = () => {
-      setScreenSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+
+      setScreenSize({ width: newWidth, height: newHeight });
+
+      const squareSize = 50;
+      const newRows = Math.floor(newHeight / squareSize);
+      const newCols = Math.floor(newWidth / squareSize);
+
+      setRows(new Array(newRows).fill(1));
+      setCols(new Array(newCols).fill(1));
     };
-    updateScreenSize(); // Initial call
+
+    updateScreenSize();
     window.addEventListener("resize", updateScreenSize);
 
     return () => window.removeEventListener("resize", updateScreenSize);
   }, []);
 
-  const squareSize = Math.max(Math.min(Math.floor(screenSize.width / 20), Math.floor(screenSize.height / 20)), 1);
-  const rows = squareSize > 0 ? new Array(Math.floor(screenSize.height / squareSize)).fill(1) : [];
-  const cols = squareSize > 0 ? new Array(Math.floor(screenSize.width / squareSize)).fill(1) : [];
+  const squareSize = 50;
 
   const colors = [
     "--sky-300",
@@ -37,37 +45,73 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
 
   const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
 
-  // Initially, all squares are "uncolored" (empty string)
-  const initializeUncoloredGrid = () => rows.map(() => cols.map(() => ""));
+  const initializeUncoloredGrid = (rowsLength: number, colsLength: number) => {
+    return Array.from({ length: rowsLength }, () => Array(colsLength).fill(""));
+  };
 
   const centerPosition = {
     row: Math.floor(rows.length / 2),
     col: Math.floor(cols.length / 2),
   };
 
-  const [blockColors, setBlockColors] = useState<string[][]>(initializeUncoloredGrid);
+  const [blockColors, setBlockColors] = useState<string[][]>(initializeUncoloredGrid(0, 0));
   const [knights, setKnights] = useState(
-    Array.from({ length: 5 }, () => ({
+    Array.from({ length: 3 }, () => ({
+      row: centerPosition.row,
+      col: centerPosition.col,
+      color: getRandomColor(),
+    }))
+  );
+  const [bishops, setBishops] = useState(
+    Array.from({ length: 2 }, () => ({
       row: centerPosition.row,
       col: centerPosition.col,
       color: getRandomColor(),
     }))
   );
 
-  const getRandomKnightMove = (row: number, col: number) => {
-    const knightMoves = [
+  const getRandomKnightMove = (row: number, col: number): [number, number] => {
+    const knightMoves: [number, number][] = [
       [-2, -1], [-1, -2], [1, -2], [2, -1],
       [2, 1], [1, 2], [-1, 2], [-2, 1],
     ];
+
     const validMoves = knightMoves.filter(([dr, dc]) => {
       const newRow = row + dr;
       const newCol = col + dc;
       return newRow >= 0 && newRow < rows.length && newCol >= 0 && newCol < cols.length;
     });
-    return validMoves[Math.floor(Math.random() * validMoves.length)];
+
+    return validMoves.length > 0 ? validMoves[Math.floor(Math.random() * validMoves.length)] : [0, 0];
+  };
+
+  const getRandomBishopMove = (row: number, col: number): [number, number] => {
+    const bishopMoves: [number, number][] = [
+      [-1, -1], [-1, 1], [1, -1], [1, 1],
+    ];
+
+    const validMoves = bishopMoves.filter(([dr, dc]) => {
+      const newRow = row + dr;
+      const newCol = col + dc;
+      return newRow >= 0 && newRow < rows.length && newCol >= 0 && newCol < cols.length;
+    });
+
+    return validMoves.length > 0 ? validMoves[Math.floor(Math.random() * validMoves.length)] : [0, 0];
   };
 
   useEffect(() => {
+    setKnights(knights.map(knight => ({
+      ...knight,
+      row: centerPosition.row,
+      col: centerPosition.col,
+    })));
+
+    setBishops(bishops.map(bishop => ({
+      ...bishop,
+      row: centerPosition.row,
+      col: centerPosition.col,
+    })));
+
     const interval = setInterval(() => {
       setKnights((prevKnights) => {
         return prevKnights.map((knight) => {
@@ -75,23 +119,44 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
           const newRow = knight.row + rowOffset;
           const newCol = knight.col + colOffset;
 
-          // Check if the row and column are valid before updating the grid
           if (newRow >= 0 && newRow < rows.length && newCol >= 0 && newCol < cols.length) {
             setBlockColors((prevBlockColors) => {
-              // Ensure the array structure is properly handled
-              const updatedColors = prevBlockColors.map((row, index) => {
-                // Ensure the row exists in the updated structure
-                if (!row) row = Array(cols.length).fill("");
-                return [...row];
-              });
+              // Ensure we're creating a new deep copy of the row and the specific square
+              const updatedColors = prevBlockColors.map((row, rowIndex) =>
+                rowIndex === newRow ? [...row] : row
+              );
 
-              // Ensure the row exists
-              if (!updatedColors[newRow]) {
-                updatedColors[newRow] = Array(cols.length).fill("");
-              }
-
-              // Update the new color
+              // Update only the exact square
               updatedColors[newRow][newCol] = `var(${getRandomColor()})`;
+
+              return updatedColors;
+            });
+          }
+
+          return {
+            row: newRow,
+            col: newCol,
+            color: getRandomColor(),
+          };
+        });
+      });
+
+      setBishops((prevBishops) => {
+        return prevBishops.map((bishop) => {
+          const [rowOffset, colOffset] = getRandomBishopMove(bishop.row, bishop.col);
+          const newRow = bishop.row + rowOffset;
+          const newCol = bishop.col + colOffset;
+
+          if (newRow >= 0 && newRow < rows.length && newCol >= 0 && newCol < cols.length) {
+            setBlockColors((prevBlockColors) => {
+              // Ensure we're creating a new deep copy of the row and the specific square
+              const updatedColors = prevBlockColors.map((row, rowIndex) =>
+                rowIndex === newRow ? [...row] : row
+              );
+
+              // Update only the exact square
+              updatedColors[newRow][newCol] = `var(${getRandomColor()})`;
+
               return updatedColors;
             });
           }
@@ -106,6 +171,10 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
     }, 1000);
 
     return () => clearInterval(interval);
+  }, [rows.length, cols.length]);
+
+  useEffect(() => {
+    setBlockColors(initializeUncoloredGrid(rows.length, cols.length));
   }, [rows.length, cols.length]);
 
   return (
@@ -126,30 +195,32 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
             <motion.div
               key={`col${j}`}
               style={{ width: squareSize, height: squareSize }}
-              animate={{ backgroundColor: blockColors[i]?.[j] || "transparent" }} // Default to transparent if uncolored
+              animate={{ backgroundColor: blockColors[i]?.[j] || "transparent" }}
               whileHover={{ backgroundColor: `var(${getRandomColor()})`, transition: { duration: 0 } }}
               className={cn(
                 "border border-slate-700 relative",
-                knights.some((knight) => knight.row === i && knight.col === j)
-                  ? knights.find((knight) => knight.row === i && knight.col === j)?.color
+                (knights.some((knight) => knight.row === i && knight.col === j) || 
+                bishops.some((bishop) => bishop.row === i && bishop.col === j))
+                  ? knights.find((knight) => knight.row === i && knight.col === j)?.color ||
+                    bishops.find((bishop) => bishop.row === i && bishop.col === j)?.color
                   : ""
               )}
             >
               {knights.some((knight) => knight.row === i && knight.col === j) && (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="absolute h-6 w-10 text-black pointer-events-none"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M8 4.5v15m8-15v15m-5 0a3 3 0 106 0h-6zM6 14h6m-6 4h6m-6-8h6m-6-4h6"
-                  />
-                </svg>
+                <img
+                  src="/chess/knight.png"
+                  alt="Knight"
+                  style={{ width: "100%", height: "100%" }}
+                  className="absolute h-full w-full object-contain pointer-events-none"
+                />
+              )}
+              {bishops.some((bishop) => bishop.row === i && bishop.col === j) && (
+                <img
+                  src="/chess/bishop.png"
+                  alt="Bishop"
+                  style={{ width: "100%", height: "100%" }}
+                  className="absolute h-full w-full object-contain pointer-events-none"
+                />
               )}
             </motion.div>
           ))}
