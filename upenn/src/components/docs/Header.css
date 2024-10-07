@@ -1,0 +1,33 @@
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    width: 60%;
+    background-color: rgb(0, 0, 0, 0.5);
+
+    .header-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-left: 10px;
+        padding-right: 10px;
+        .logo .logo-img {
+            height: 80%;
+            width: auto;
+        }
+        .logo .logo-img:hover {
+            cursor: pointer;
+        }
+        .menu {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            font-weight: bold;
+            .menu-item {
+                margin-left: 10px;
+            }
+        }
+    }
+}
+
