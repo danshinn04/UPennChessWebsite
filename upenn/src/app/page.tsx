@@ -66,7 +66,7 @@ export default function Home() {
                             duration: 0.8,
                             ease: "easeInOut",
                         }}
-                        className="mt-8 relative z-30 items-center bg-gradient-to-br from-blue-300 to-red-300 py-4 bg-clip-text text-center text-5xl font-bold tracking-tight text-transparent md:text-8xl">
+                        className="mt-8 relative z-30 items-center bg-gradient-to-br from-blue-300 to-red-400 py-4 bg-clip-text text-center text-5xl font-bold tracking-tight text-transparent md:text-7xl">
                         Welcome to <br/>Penn Chess
                     </motion.h1>
 
@@ -88,13 +88,13 @@ export default function Home() {
                 </div>
 
                 <motion.h1
-                    initial={{opacity: 0.5, y: 200}}
-                    whileInView={{opacity: 1, y: 100}}
+                    initial={{opacity: 0.5, y: 100}}
+                    whileInView={{opacity: 1, y: 0}}
                     transition={{
                         duration: 0.8,
                         ease: "easeInOut",
                     }}
-                    className="w-full max-w-[70%] flex mx-auto h-[100px] relative z-30 bottom-0 items-center justify-center px-[10%] md:text-3xl">
+                    className="w-full max-w-[70%] flex mx-auto h-[100px] relative z-30 top-[10%] items-center justify-center px-[10%] md:text-3xl">
 
                     <div className='flex flex-row justify-center items-center gap-16'>
                         {sponsors.map((sponsor) => (
@@ -113,27 +113,22 @@ export default function Home() {
 
                 </motion.h1>
 
-                <div className="scrolldown absolute bottom-[-150px] justify-center z-30">
-                <div className="chevrons">
-                        <div className="chevrondown"></div>
-                        <div className="chevrondown"></div>
+                <motion.h1
+                    initial={{opacity: 0.5, y: 100}}
+                    whileInView={{opacity: 1, y: 0}}
+                    transition={{duration: 0.8, ease: "easeInOut",}}>
+                    <div className="scrolldown absolute bottom-0 justify-center z-30">
+                    <div className="chevrons">
+                            <div className="chevrondown"></div>
+                            <div className="chevrondown"></div>
+                        </div>
                     </div>
-                </div>
+                </motion.h1>
 
             </div>
 
 
-            {/*Sponsors*/}
-            {/*<motion.h1*/}
-            {/*    initial={{opacity: 0.5, y: 50}}*/}
-            {/*    whileInView={{opacity: 1, y: -50}}*/}
-            {/*    transition={{*/}
-            {/*        duration: 0.8,*/}
-            {/*        ease: "easeInOut",*/}
-            {/*    }}*/}
-            {/*    className="mt-8 bg-gradient-to-br from-slate-100 to-slate-400 py-4 bg-clip-text text-center text-5xl font-bold tracking-tight text-transparent md:text-6xl">*/}
-            {/*    Sponsors*/}
-            {/*</motion.h1>*/}
+
 
 
             <div className="mx-[20%] w-[60%] flex flex-row justify-center">
@@ -146,23 +141,25 @@ export default function Home() {
                             duration: 0.8,
                             ease: "easeInOut",
                         }}
-                        className="mt-8 bg-gradient-to-br from-slate-100 to-slate-400 py-4 bg-clip-text text-center text-5xl font-bold tracking-tight text-transparent md:text-6xl">
-                        Meet the Team
+                        className="flex flex-col my-10">
+
+                        <div className="mt-8 bg-gradient-to-br from-slate-100 flex flex-col to-slate-400 py-4 bg-clip-text text-center text-5xl font-bold tracking-tight text-transparent md:text-6xl">Meet the Team</div>
+                        <div className="flex flex-row grid-rows-3 gap-5 w-full max-w-70%">
+
+                            {teamMembers.map((member) => (
+                                <div
+                                    className="border border-white/[0.2] dark:border-white/[0.2] flex flex-col items-start max-w-sm mx-auto p-4 relative h-[30rem]">
+                                    <EvervaultCard className='Test' text='nig'/>
+                                    <h1 className="text-white">{member.name}</h1>
+                                    <h2 className="dark:text-white text-white mt-4 text-sm font-light">
+                                        {member.description}
+                                    </h2>
+                                </div>
+                            ))}
+                        </div>
                     </motion.h1>
 
-                    <div className="flex flex-row grid-rows-3 gap-5 w-full max-w-70%">
 
-                        {teamMembers.map((member) => (
-                            <div
-                                className="border border-white/[0.2] dark:border-white/[0.2] flex flex-col items-start max-w-sm mx-auto p-4 relative h-[30rem]">
-                                <EvervaultCard className='Test' text='nig'/>
-                                <h1 className="text-white">{member.name}</h1>
-                                <h2 className="dark:text-white text-white mt-4 text-sm font-light">
-                                    {member.description}
-                                </h2>
-                            </div>
-                        ))}
-                    </div>
                     <div className="flex flex-row grid-row-4 justify-center items-center gap-10 mt-32">
 
                         <GlareCard className="flex flex-col items-center justify-center">
