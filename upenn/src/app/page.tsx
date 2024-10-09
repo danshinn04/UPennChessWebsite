@@ -31,8 +31,8 @@ export default function Home() {
     ];
     const sponsors = [
         {
-            img: 'https://media.discordapp.net/attachments/853703320711462973/1292686266386874458/Rr8bSebnwyYdOVmCyApMVmKzAZAUmKzBZgckKTFZgsgKTFZiswAW3AhOA94J7JJMLmqzAZAUmKzBZgSf7CvgMXgV4mWI7AXif7A9cnTFZiswGQFJiswWYHJCkxWYLICkxWYrMBkBbZhBSYA7zYs6uQtJyswWYHJCkxWYLICm62AAbxFUfzDsixfUpblI2VZfiKO4zbMHgne2eyApMVmKzAZAUmKzBZgckKTFZgsgKTFZiswGQFBlmBCcA7yGpNfnayApMVmKzAZAUmKzCGFSjLMpmamtpTFMUvTk1NPa8oitNFUXw5SZL3BUGwNoaPmLzFZAUmKzBZgckKTFZgsgKTFZiswGQFJiswWYHJCjxFVmAC8D5FHvTkNicrMFmByQpMVuDCWYGyLMOpqanpPM9vcs5dPjU1tZim6fE4jm8PgqB94Vzp5EomKzBZgckKTFZgsgKTFZiswGQFJiswWYHJCkxW4EJfgf8fgSSe3aHKLRwAAAAASUVORK5CYI..png?ex=6704a366&is=670351e6&hm=7d769979598d020d4c9fc39107b364edb83eee85dac32aa87faad802b6d902a8&=&format=webp&quality=lossless',
-            name: 'Citadel'
+            img: 'https://media-s3-us-east-1.ceros.com/tradeweb/images/2021/06/08/edf5347017d4564f7773d9966537074c/tradeweb-logo-white-wltblueburst-rgb.png',
+            name: 'TradeWeb'
         },
         {
             img: 'https://opensource.janestreet.com/assets/JS_logo-d7838b558a1de6c51553426ab5a2bba474510c41c6a5e910a9e30524a32dec27.png',
@@ -41,6 +41,14 @@ export default function Home() {
         {
             img: 'https://res.cloudinary.com/drw/image/upload/f_auto,q_auto/e_colorize,co_white/h_200/comm-drw/logos/logo_drwvc_white.png',
             name: 'DWR'
+        },
+        {
+            img: 'https://upload.wikimedia.org/wikipedia/commons/2/25/Flow_Traders_Logo.png',
+            name: 'Flow Traders'
+        },
+        {
+            img: 'https://sponsored.inquirer.com/wp-content/uploads/2023/08/SIG_Blue.png',
+            name: 'SIG'
         }
     ]
     return (
@@ -54,13 +62,13 @@ export default function Home() {
 
 
             <div
-                className="h-dvh relative w-full overflow-hidden bg-slate-900 flex flex-col items-center justify-center rounded-lg">
+                className="h-dvh relative w-full 0 overflow-hidden bg-slate-900 flex flex-col items-center rounded-lg">
                 <div
                     className="absolute inset-0 w-full h-dvh bg-slate-900 z-20 [mask-image:radial-gradient(transparent,white)] pointer-events-none"/>
                 <Boxes className='z-10'/>
-                <div className="flex flex-col items-center justify-center">
+                <div className="flex flex-col items-center justify-center absolute top-[20%]">
                     <motion.h1
-                        initial={{opacity: 0.5, y: 100}}
+                        initial={{opacity: 0.5, y: -50}}
                         whileInView={{opacity: 1, y: 0}}
                         transition={{
                             duration: 0.8,
@@ -71,13 +79,13 @@ export default function Home() {
                     </motion.h1>
 
                     <motion.h1
-                        initial={{opacity: 0.5, y: 100}}
+                        initial={{opacity: 0.5, y: -50}}
                         whileInView={{opacity: 1, y: 0}}
                         transition={{
                             duration: 0.8,
                             ease: "easeInOut",
                         }}
-                        className="mt-8 max-w-[50%] relative z-30 items-center bg-gradient-to-br from-slate-100 to-slate-400 py-4 bg-clip-text text-center text-5xl font-bold tracking-tight text-transparent md:text-lg">
+                        className="mt-5 max-w-[50%] relative z-30 items-center bg-gradient-to-br from-slate-100 to-slate-300 py-4 bg-clip-text text-center text-5xl font-bold tracking-tight text-transparent text-lg">
                         “The beauty of chess is it can be whatever you want it to be. It transcends language, age, race,
                         religion, politics, gender, and socioeconomic background. Whatever your circumstances, anyone
                         can
@@ -94,45 +102,60 @@ export default function Home() {
                         duration: 0.8,
                         ease: "easeInOut",
                     }}
-                    className="w-full max-w-[70%] flex mx-auto h-[100px] relative z-30 top-[10%] items-center justify-center px-[10%] md:text-3xl">
+                    className="w-[80%] flex flex-col absolute z-30 bottom-[8%] items-center justify-center md:text-3xl">
 
-                    <div className='flex flex-row justify-center items-center gap-16'>
+                    <div className='flex flex-wrap justify-center items-center gap-8'>
                         {sponsors.map((sponsor) => (
                             // <div className="h-[100%] w-auto">
                             //     <img className='h-[80px] w-auto' src={sponsor.img} alt=""/>
                             // </div>
-                            <button className="button">
+                            <button className="button max-h-[75px] w-full min-w-[150px] max-w-[200px] flex justify-center items-center">
                                 <span className="button_lg">
                                     <span className="button_sl"></span>
-                                    <span className="button_text flex justify-center"><img className='h-[60px]' src={sponsor.img} alt=""/></span>
+                                    <span className="button_text flex max-w-[180px] h-[40px] items-center"><img className='' src={sponsor.img} alt=""/></span>
                                 </span>
                             </button>
                         ))}
                     </div>
 
 
-                </motion.h1>
-
-                <motion.h1
-                    initial={{opacity: 0.5, y: 100}}
-                    whileInView={{opacity: 1, y: 0}}
-                    transition={{duration: 0.8, ease: "easeInOut",}}>
-                    <div className="scrolldown absolute bottom-0 justify-center z-30">
-                    <div className="chevrons">
+                    {/* <div className="scrolldown">
+                        <div className="chevrons">
                             <div className="chevrondown"></div>
                             <div className="chevrondown"></div>
                         </div>
-                    </div>
+                    </div> */}
+
+
                 </motion.h1>
 
             </div>
 
 
-
-
-
             <div className="mx-[20%] w-[60%] flex flex-row justify-center">
                 <div>
+                    <motion.h1
+                    initial={{opacity: 0.5, y:50}}
+                    whileInView={{opacity: 1, y:-50}}
+                    transition={{
+                        duration: 0.8,
+                        ease: "easeInOut"
+                    }}
+                    className="flex justify-center">
+                        <div className="max-w-[50%] flex flex-col">
+                            <div className="mt-24 bg-gradient-to-br from-slate-100 flex flex-col to-slate-400 py-4 bg-clip-text text-center text-5xl font-bold tracking-tight text-transparent md:text-6xl">
+                                About Us
+                            </div>
+                            <div className="flex text-center md:text-lg">
+                                Welcome to UPenn Chess Club.
+                                Whether you’ve played chess your whole life or have no idea how the pieces move,
+                                we encourage you to stop by our meetings and events.
+                                Everyone  is welcome, including non-Penn students.
+                            </div>
+
+                        </div>
+
+                    </motion.h1>
 
                     <motion.h1
                         initial={{opacity: 0.5, y: 50}}
@@ -149,7 +172,7 @@ export default function Home() {
                             {teamMembers.map((member) => (
                                 <div
                                     className="border border-white/[0.2] dark:border-white/[0.2] flex flex-col items-start max-w-sm mx-auto p-4 relative h-[30rem]">
-                                    <EvervaultCard className='Test' text='nig'/>
+                                    <EvervaultCard className='Test' text={member.photo? member.photo :'https://cdn-icons-png.flaticon.com/512/8847/8847419.png'}/>
                                     <h1 className="text-white">{member.name}</h1>
                                     <h2 className="dark:text-white text-white mt-4 text-sm font-light">
                                         {member.description}

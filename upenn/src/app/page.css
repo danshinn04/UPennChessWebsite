@@ -108,7 +108,9 @@
     font-weight: bold;
     font-size: 14px;
     transition: all .15s ease;
-    min-width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .button::before,
@@ -192,7 +194,7 @@
     bottom: -1px;
     left: -8px;
     width: 0;
-    background-color: #ff4655;
+    background-color: #8f0707;
     transform: skew(-15deg);
     transition: all .2s ease;
 }
