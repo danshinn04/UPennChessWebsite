@@ -49,6 +49,10 @@ export default function Home() {
         {
             img: 'https://sponsored.inquirer.com/wp-content/uploads/2023/08/SIG_Blue.png',
             name: 'SIG'
+        },
+        {
+            img: 'https://static1.squarespace.com/static/5a4562ac8c56a8a1cd18eef0/t/5a46b92eec212ddd08ac44d2/1727235928963/',
+            name: 'SAC'
         }
     ]
     return (
@@ -74,7 +78,7 @@ export default function Home() {
                             duration: 0.8,
                             ease: "easeInOut",
                         }}
-                        className="mt-8 relative z-30 items-center bg-gradient-to-br from-blue-300 to-red-400 py-4 bg-clip-text text-center text-5xl font-bold tracking-tight text-transparent md:text-7xl">
+                        className="mt-8 relative z-30 items-center bg-gradient-to-br from-blue-300 to-red-400 py-4 bg-clip-text text-center text-5xl font-bold tracking-tight text-transparent md:text-7xl sm:text-5xl">
                         Welcome to <br/>Penn Chess
                     </motion.h1>
 
@@ -85,7 +89,7 @@ export default function Home() {
                             duration: 0.8,
                             ease: "easeInOut",
                         }}
-                        className="mt-5 max-w-[50%] relative z-30 items-center bg-gradient-to-br from-slate-100 to-slate-300 py-4 bg-clip-text text-center text-5xl font-bold tracking-tight text-transparent text-lg">
+                        className="mt-5 max-w-[50%] relative z-30 items-center bg-gradient-to-br from-slate-100 to-slate-300 py-4 bg-clip-text text-center font-bold tracking-tight text-transparent md:text-lg sm:text-base">
                         “The beauty of chess is it can be whatever you want it to be. It transcends language, age, race,
                         religion, politics, gender, and socioeconomic background. Whatever your circumstances, anyone
                         can
@@ -102,17 +106,17 @@ export default function Home() {
                         duration: 0.8,
                         ease: "easeInOut",
                     }}
-                    className="w-[80%] flex flex-col absolute z-30 bottom-[8%] items-center justify-center md:text-3xl">
+                    className="w-[100%] flex flex-col absolute z-30 bottom-[5%] items-center justify-center md:text-3xl">
 
-                    <div className='flex flex-wrap justify-center items-center gap-8'>
+                    <div className='flex flex-wrap justify-center items-center gap-x-8 gap-y-0'>
                         {sponsors.map((sponsor) => (
                             // <div className="h-[100%] w-auto">
                             //     <img className='h-[80px] w-auto' src={sponsor.img} alt=""/>
                             // </div>
-                            <button className="button max-h-[75px] w-full min-w-[150px] max-w-[200px] flex justify-center items-center">
-                                <span className="button_lg">
+                            <button className="button max-h-[9%] w-full min-w-[150px] max-w-[15%] flex justify-center items-center">
+                                <span className="button_lg flex justify-center">
                                     <span className="button_sl"></span>
-                                    <span className="button_text flex max-w-[180px] h-[40px] items-center"><img className='' src={sponsor.img} alt=""/></span>
+                                    <span className="button_text flex max-w-[180px] h-[40px] items-center"><img className='max-h-[100%]' src={sponsor.img} alt=""/></span>
                                 </span>
                             </button>
                         ))}
@@ -132,7 +136,7 @@ export default function Home() {
             </div>
 
 
-            <div className="mx-[20%] w-[60%] flex flex-row justify-center">
+            <div id='AboutUs' className="mx-[20%] w-[60%] flex flex-row justify-center">
                 <div>
                     <motion.h1
                     initial={{opacity: 0.5, y:50}}
@@ -142,7 +146,7 @@ export default function Home() {
                         ease: "easeInOut"
                     }}
                     className="flex justify-center">
-                        <div className="max-w-[50%] flex flex-col">
+                        <div className="w-[50%] flex flex-wrap flex-col">
                             <div className="mt-24 bg-gradient-to-br from-slate-100 flex flex-col to-slate-400 py-4 bg-clip-text text-center text-5xl font-bold tracking-tight text-transparent md:text-6xl">
                                 About Us
                             </div>
@@ -164,14 +168,14 @@ export default function Home() {
                             duration: 0.8,
                             ease: "easeInOut",
                         }}
-                        className="flex flex-col my-10">
+                        className="flex flex-col my-10 justify-center">
 
                         <div className="mt-8 bg-gradient-to-br from-slate-100 flex flex-col to-slate-400 py-4 bg-clip-text text-center text-5xl font-bold tracking-tight text-transparent md:text-6xl">Meet the Team</div>
-                        <div className="flex flex-row grid-rows-3 gap-5 w-full max-w-70%">
+                        <div className="flex flex-wrap gap-x-5 gap-y-5">
 
                             {teamMembers.map((member) => (
                                 <div
-                                    className="border border-white/[0.2] dark:border-white/[0.2] flex flex-col items-start max-w-sm mx-auto p-4 relative h-[30rem]">
+                                    className="border border-white/[0.2] dark:border-white/[0.2] flex flex-col items-start max-w-sm mx-auto p-4 relative max-h-[20%]">
                                     <EvervaultCard className='Test' text={member.photo? member.photo :'https://cdn-icons-png.flaticon.com/512/8847/8847419.png'}/>
                                     <h1 className="text-white">{member.name}</h1>
                                     <h2 className="dark:text-white text-white mt-4 text-sm font-light">
